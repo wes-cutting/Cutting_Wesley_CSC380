@@ -14,12 +14,12 @@ import java.util.Scanner;
  * Time: 4:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Client {
+public class Client_1 {
 
     Socket socket;
     int socketNumber;
 
-    public Client(int socketNumber){
+    public Client_1(int socketNumber){
         this.socketNumber = socketNumber;
     }
 
@@ -77,7 +77,7 @@ public class Client {
     }
 
     public static void main(String[] args){
-        Client client = new Client(2222);
+        Client_1 client = new Client_1(2222);
         client.start();
     }
 }

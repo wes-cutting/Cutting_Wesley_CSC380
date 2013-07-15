@@ -11,12 +11,12 @@ import java.net.Socket;
  * Time: 4:47 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Server {
+public class Server_1 {
 
     ServerSocket socket;
     int socketNumber;
 
-    public Server(int socketNumber){
+    public Server_1(int socketNumber){
         this.socketNumber = socketNumber;
     }
 
@@ -25,7 +25,7 @@ public class Server {
             socket = new ServerSocket(socketNumber);
             while(true){
                 Socket client = socket.accept();
-                new MeThread(client).start();
+                new MeThread_1(client).start();
             }
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -33,7 +33,7 @@ public class Server {
     }
 
     public static void main(String[] args){
-        Server server = new Server(2222);
+        Server_1 server = new Server_1(2222);
         server.spin();
     }
 }

@@ -1,4 +1,4 @@
-package edu.neumont.csc380.ds1.server;
+package edu.neumont.csc380.ds2.server;
 
 /**
  * Created with IntelliJ IDEA.

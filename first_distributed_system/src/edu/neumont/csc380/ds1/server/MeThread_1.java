@@ -13,16 +13,16 @@ import java.net.Socket;
  * Time: 4:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MeThread extends Thread {
+public class MeThread_1 extends Thread {
 
     Socket socket;
-    public MeThread(Socket s){
+    public MeThread_1(Socket s){
         socket = s;
     }
 
     @Override
     public void run() {
-        MathLogic logic = new MathLogic();
+        MathLogic_1 logic = new MathLogic_1();
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
