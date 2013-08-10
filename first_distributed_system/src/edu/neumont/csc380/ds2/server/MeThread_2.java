@@ -1,11 +1,14 @@
 package edu.neumont.csc380.ds2.server;
 
-import edu.neumont.csc380.ds1.server.MathLogic_1;
+import org.omg.Dynamic.Parameter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.net.Socket;
 
 /**
@@ -17,6 +20,10 @@ import java.net.Socket;
  */
 public class MeThread_2 extends Thread {
 
+    Method[] methods;
+    int methodChoice;
+    String path = "edu.neumont.csc380.ds2.server.MathLogic_2";
+
     Socket socket;
     public MeThread_2(Socket s){
         socket = s;
@@ -24,7 +31,7 @@ public class MeThread_2 extends Thread {
 
     @Override
     public void run() {
-        MathLogic_1 logic = new MathLogic_1();
+        MathLogic_2 logic = new MathLogic_2();
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -33,23 +40,48 @@ public class MeThread_2 extends Thread {
             output = "Welcome to Math Server";
             out.println(output);
 
-            input = in.readLine();
-            String[] inputs = input.split(";");
-            if(Integer.parseInt(inputs[0]) == 1)
-                output = logic.add(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2])) + "";
-            else
-                output = logic.subtract(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2])) + "";
+            output = getMethods(path);
             out.println(output);
 
-            out.println("Goodbye!");
+            input = in.readLine();
+            Object result = invokeMethod(input);
+            out.println(result);
 
             in.close();
             out.close();
             socket.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+    }
 
+    // Parse Methods objects of the class at the given path into a single String
+    private String getMethods(String classPath){
+        reflectOnClass(classPath);
+        String methodsAvailable = "";
+        for(Method m : methods){
+            methodsAvailable += m.getName() + ";";
+        }
+        methodsAvailable = methodsAvailable.substring(0, methodsAvailable.length() - 1);
+        return methodsAvailable;
+    }
+
+    // Get the available Methods of the class at the given path
+    private void reflectOnClass(String classPath){
+        try {
+            Class myClass = Class.forName(classPath);
+            methods = myClass.getDeclaredMethods();
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    private Object invokeMethod(String input) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        Object[] parameters = input.split(";");
+        Class instanceObject = Class.forName(path);
+        Object callMe = instanceObject.newInstance();
+        Method m = instanceObject.getMethod(methods[methodChoice].getName(), Number[].class);
+        return m.invoke(callMe, new Object[]{parameters});
     }
 }

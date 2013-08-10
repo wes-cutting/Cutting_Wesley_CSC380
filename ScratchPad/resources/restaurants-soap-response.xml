@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<soap:Envelope
+        xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+        soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+
+    <soap:Body xmlns:lunch="http://www.neumont.edu/cutting/lunch/restaurants">
+        <lunch:RestaurantResponse>
+            <lunch:restaurant>
+                <lunch:id>1</lunch:id>
+                <lunch:name>Boston Deli</lunch:name>
+            </lunch:restaurant>
+            <lunch:restaurant>
+                <lunch:id>2</lunch:id>
+                <lunch:name>Red Hot</lunch:name>
+            </lunch:restaurant>
+        </lunch:RestaurantResponse>
+    </soap:Body>
+
+</soap:Envelope>

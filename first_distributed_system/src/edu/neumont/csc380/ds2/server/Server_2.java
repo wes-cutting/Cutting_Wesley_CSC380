@@ -27,7 +27,7 @@ public class Server_2 {
             socket = new ServerSocket(socketNumber);
             while(true){
                 Socket client = socket.accept();
-                new MeThread_1(client).start();
+                new MeThread_2(client).start();
             }
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

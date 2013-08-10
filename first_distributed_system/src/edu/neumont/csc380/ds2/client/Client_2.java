@@ -1,5 +1,6 @@
 package edu.neumont.csc380.ds2.client;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +20,8 @@ public class Client_2 {
     Socket socket;
     int socketNumber;
 
+    String[] methods;
+
     public Client_2(int socketNumber){
         this.socketNumber = socketNumber;
     }
@@ -28,22 +31,17 @@ public class Client_2 {
             socket = new Socket("127.0.0.1", socketNumber);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String input, output;
+            String output;
 
             printOutFromServer(in);
+            printOutOptions(in, "Method");
 
-            System.out.println("Would you like to add or subtract?" + '\n' + "1) Add" + '\n' + "2) Subtract");
+            int methodChoice = getInt() - 1;
+            output = methodChoice + "";
+            out.println(output);
 
-            Scanner scan = new Scanner(System.in);
-            int selection = getInput(scan);
-            String type;
-            if(selection == 1){
-                type = "add";
-            }else{
-                type = "subtract";
-            }
-            int[] values = getValues(scan, type);
-            output = selection + ";" + values[0] + ";" + values[1];
+            System.out.println("Enter Parameters in a list separated by semicolons: ");
+            output = in.readLine();
             out.println(output);
 
             printOutFromServer(in);
@@ -54,23 +52,26 @@ public class Client_2 {
         }
     }
 
-    public void printOutFromServer(BufferedReader in) throws IOException {
+    // Prints out the response from the server
+    private void printOutFromServer(BufferedReader in) throws IOException {
         String input = in.readLine();
         System.out.println(input);
     }
 
-    public int[] getValues(Scanner scan, String type){
-        System.out.println("Enter the two values you would like to " + type + ": " + '\n' + "One: ");
-        int one = getInput(scan);
-        System.out.println("Two: ");
-        int two = getInput(scan);
-        int[] results = new int[2];
-        results[0] = one;
-        results[1] = two;
-        return results;
+    // Prints out the given method options
+    private void printOutOptions(BufferedReader in, String type) throws IOException {
+        String input = in.readLine();
+        methods = input.split(";");
+
+        System.out.println("    Select a " + type);
+        for(int i = 0; i < methods.length; i++){
+            System.out.println("        " + (i+1) + ") " + methods[i].toUpperCase());
+        }
     }
 
-    public int getInput(Scanner scan){
+    // Get an int from the user.
+    private int getInt(){
+        Scanner scan = new Scanner(System.in);
         String lineIn = scan.nextLine();
         int input = Integer.parseInt(lineIn);
         return input;

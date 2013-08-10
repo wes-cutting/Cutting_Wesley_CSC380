@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<soap:Envelope
+        xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+        soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+
+    <soap:Body xmlns:r="http://www.neumont.edu/cutting/lunch/restaurants">
+        <r:OrderResponse>
+            <r:menuItem>
+                <r:id>3</r:id>
+                <r:name>Chicken</r:name>
+            </r:menuItem>
+            <r:menuItem>
+                <r:id>5</r:id>
+                <r:name>Jam</r:name>
+            </r:menuItem>
+        </r:OrderResponse>
+    </soap:Body>
+
+</soap:Envelope>
