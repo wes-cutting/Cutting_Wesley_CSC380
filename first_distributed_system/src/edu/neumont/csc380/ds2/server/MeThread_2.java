@@ -37,15 +37,31 @@ public class MeThread_2 extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String input, output;
 
-            output = "Welcome to Math Server";
-            out.println(output);
+            // 1
+            {
+                output = "Welcome to Math Server";
+                out.println(output);
+                output = getMethods(path);
+                out.println(output);
+            }
+            // 2
+            {
+                input = in.readLine();
+                methodChoice = Integer.parseInt(input);
+            }
+            // 3
+            {
+                input = in.readLine();
+                Object result = invokeMethod(input);
+                output = result.toString();
+            }
+            // 4
+            {
+                out.println(output);
+                output = "Thanks for stopping by.";
+                out.println(output);
+            }
 
-            output = getMethods(path);
-            out.println(output);
-
-            input = in.readLine();
-            Object result = invokeMethod(input);
-            out.println(result);
 
             in.close();
             out.close();
@@ -78,10 +94,10 @@ public class MeThread_2 extends Thread {
     }
 
     private Object invokeMethod(String input) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Object[] parameters = input.split(";");
+        Object[] parameters = input.split(",");
         Class instanceObject = Class.forName(path);
         Object callMe = instanceObject.newInstance();
-        Method m = instanceObject.getMethod(methods[methodChoice].getName(), Number[].class);
+        Method m = instanceObject.getMethod(methods[methodChoice].getName(), Object[].class);
         return m.invoke(callMe, new Object[]{parameters});
     }
 }

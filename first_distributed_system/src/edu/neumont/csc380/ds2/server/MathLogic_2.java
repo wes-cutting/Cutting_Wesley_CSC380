@@ -13,7 +13,6 @@ public class MathLogic_2 {
         double sum = 0;
         for (Number n : params)
             sum += n.doubleValue();
-
         return sum;
     }
 

@@ -33,19 +33,29 @@ public class Client_2 {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String output;
 
-            printOutFromServer(in);
-            printOutOptions(in, "Method");
+            // 1
+            {
+                printOutFromServer(in);
+                printOutOptions(in, "Method");
+            }
+            // 2
+            {
+                int methodChoice = getInt() - 1;
+                output = methodChoice + "";
+                out.println(output);
+            }
+            // 3
+            {
+                System.out.println("Enter Parameters in a list separated by commas: ");
+                output = getConsoleInput();
+                out.println(output);
+            }
+            // 4
+            {
+                printOutFromServer(in);
+                printOutFromServer(in);
+            }
 
-            int methodChoice = getInt() - 1;
-            output = methodChoice + "";
-            out.println(output);
-
-            System.out.println("Enter Parameters in a list separated by semicolons: ");
-            output = in.readLine();
-            out.println(output);
-
-            printOutFromServer(in);
-            printOutFromServer(in);
 
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -75,6 +85,11 @@ public class Client_2 {
         String lineIn = scan.nextLine();
         int input = Integer.parseInt(lineIn);
         return input;
+    }
+
+    private String getConsoleInput(){
+        Scanner scan = new Scanner(System.in);
+        return scan.nextLine();
     }
 
     public static void main(String[] args){
