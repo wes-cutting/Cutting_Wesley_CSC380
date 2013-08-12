@@ -2,6 +2,7 @@ package servlet;
 
 import jaxb.menu.Item;
 import jaxb.menu.Restaurant;
+import jaxb.order.Order;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 
 /**
@@ -23,7 +25,16 @@ import java.math.BigDecimal;
 @WebServlet(name = "MenuOrderServlet", urlPatterns = "/menu")
 public class MenuOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            JAXBContext orderContext = JAXBContext.newInstance(Order.class);
+            InputStream inputStream = request.getInputStream();
+            Order order = (Order) orderContext.createUnmarshaller().unmarshal(inputStream);
 
+            response.getWriter().println("Order for " + order.getItem().get(0).getQuantity() + " "+ order.getItem().get(0).getName() + " received");
+
+        } catch (JAXBException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
