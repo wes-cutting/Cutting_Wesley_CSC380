@@ -33,24 +33,31 @@ public class Client_2 {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String output;
 
-            // 1
+            //1
             {
                 printOutFromServer(in);
-                printOutOptions(in, "Method");
+                printOutOptions(in, "Class");
             }
             // 2
+            {
+                int classChoice = getInt() - 1;
+                output = classChoice + "";
+                out.println(output);
+                printOutOptions(in, "Method");
+            }
+            // 3
             {
                 int methodChoice = getInt() - 1;
                 output = methodChoice + "";
                 out.println(output);
             }
-            // 3
+            // 4
             {
                 System.out.println("Enter Parameters in a list separated by commas: ");
                 output = getConsoleInput();
                 out.println(output);
             }
-            // 4
+            // 5
             {
                 printOutFromServer(in);
                 printOutFromServer(in);

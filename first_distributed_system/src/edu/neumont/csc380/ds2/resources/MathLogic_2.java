@@ -1,4 +1,4 @@
-package edu.neumont.csc380.ds2.server;
+package edu.neumont.csc380.ds2.resources;
 
 /**
  * Created with IntelliJ IDEA.
