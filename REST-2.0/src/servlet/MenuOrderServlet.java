@@ -1,7 +1,7 @@
 package servlet;
 
-import jaxb.restaurants.Restaurant;
-import jaxb.restaurants.Restaurants;
+import jaxb.menu.Item;
+import jaxb.menu.Restaurant;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +20,7 @@ import java.io.IOException;
  * Time: 10:47 AM
  * To change this template use File | Settings | File Templates.
  */
-@WebServlet(name = "MenuOrderServlet")
+@WebServlet(name = "MenuOrderServlet", urlPatterns = "/menu")
 public class MenuOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,20 +29,31 @@ public class MenuOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             JAXBContext menuContext = JAXBContext.newInstance(Restaurant.class);
+            jaxb.menu.Restaurant restaurant = new jaxb.menu.Restaurant();
             Integer restaurantId = Integer.parseInt(request.getParameter("restaurantId"));
 
-            Restaurants restaurants = new Restaurants();
-            Restaurant one = new Restaurant();
-            one.setId(1);
-            one.setName("McDonald's");
-            restaurants.getRestaurant().add(one);
-            Restaurant two = new Restaurant();
-            two.setId(2);
-            two.setName("Arby's");
-            restaurants.getRestaurant().add(two);
+            if(restaurantId == 1){
+                Item item1 = new Item();
+                item1.setName("Bacon");
+                item1.setPrice(new BigDecimal(1.00));
+                restaurant.addItem(item1);
 
-            Restaurant restaurant = restaurants.getRestaurant().get(restaurantId);
+                Item item2 = new Item();
+                item2.setName("Eggs");
+                item2.setPrice(new BigDecimal(2.00));
+                restaurant.addItem(item2);
+            }
+            else{
+                Item item1 = new Item();
+                item1.setName("Steak");
+                item1.setPrice(new BigDecimal(12.00));
+                restaurant.addItem(item1);
 
+                Item item2 = new Item();
+                item2.setName("Potatoes");
+                item2.setPrice(new BigDecimal(3.00));
+                restaurant.addItem(item2);
+            }
 
             menuContext.createMarshaller().marshal(restaurant, response.getOutputStream());
 

@@ -68,4 +68,8 @@ public class Restaurant {
         return this.item;
     }
 
+    public void addItem(Item item){
+        getItem().add(item);
+    }
+
 }

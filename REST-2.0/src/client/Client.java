@@ -1,5 +1,6 @@
 package client;
 
+import jaxb.menu.Item;
 import jaxb.restaurants.Restaurant;
 import jaxb.restaurants.Restaurants;
 
@@ -40,13 +41,17 @@ public class Client {
             URL menuURL = new URL("http", "localhost", 8080, "/rest/menu?restaurantId=" + input);
             HttpURLConnection menuConnection = (HttpURLConnection) menuURL.openConnection();
 
-            JAXBContext menuContext = JAXBContext.newInstance(Restaurants.class);
+            JAXBContext menuContext = JAXBContext.newInstance(jaxb.menu.Restaurant.class);
             InputStream menuInputStream = menuConnection.getInputStream();
-            Restaurant restaurant = (Restaurant) menuContext.createUnmarshaller().unmarshal(menuInputStream);
+            jaxb.menu.Restaurant restaurant = (jaxb.menu.Restaurant) menuContext.createUnmarshaller().unmarshal(menuInputStream);
 
-            restaurant.
+            for (Item i : restaurant.getItem()){
+                System.out.println(restaurant.getItem().indexOf(i) + ") " + i.getName() + ": " + i.getPrice());
+            }
+            System.out.println("Pick an item:");
+            String menuItem = scan.nextLine();
 
-            //menuConnection.setRequestMethod("POST");
+            menuConnection.setRequestMethod("POST");
 
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
