@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<restaurants>
+    <restaurant name="McDonalds" id="1"/>
+    <restaurant name="Arby's" id="2"/>
+</restaurants>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order>
+    <item name="Bacon" price="1.00" quantity="14"/>
+    <item name="Eggs" price="2.00" quantity="2"/>
+</order>
